@@ -10,9 +10,19 @@ module Frest
     )
       x = store.get(id: id)
       return x if x == Frest::Core::NotFound
-      k = x.keys.first
+      execute(
+          json: x,
+          store: store
+      )
+    end
+
+    def execute(
+      json:,
+      store:
+    )
+      k = json.keys.first
       f = store.get(id: k)
-      f.call(x[k])
+      f.call(json[k])
     end
   end
 end
